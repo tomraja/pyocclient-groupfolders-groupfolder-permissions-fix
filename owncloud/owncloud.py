@@ -692,6 +692,59 @@ class Client(object):
         file_handle.close()
         return result
 
+    def create_group_folder(self,folder_name):
+
+        self.OCS_BASEPATH = ''
+        res = self._make_ocs_request(
+            'POST',
+            self.OCS_SERVICE_APPS,
+            'groupfolders/folders',
+            data={"mountpoint": folder_name,
+                  }
+        )
+
+        self.OCS_BASEPATH = 'ocs/v1.php/'
+
+        if res.status_code == 200:
+            return res
+
+    def set_group_folder_group(self,folder_id,group_name):
+
+        self.OCS_BASEPATH = ''
+        res = self._make_ocs_request(
+            'POST',
+            self.OCS_SERVICE_APPS,
+            f'groupfolders/folders/{folder_id}/groups',
+            data={"group": group_name}
+        )
+
+        self.OCS_BASEPATH = 'ocs/v1.php/'
+
+        if res.status_code == 200:
+            return res
+
+    def get_group_folders(self):
+
+
+        self.OCS_BASEPATH = ''
+        res = self._make_ocs_request(
+            'GET',
+            self.OCS_SERVICE_APPS,
+            'groupfolders/folders'
+        )
+        self.OCS_BASEPATH = 'ocs/v1.php/'
+
+        if res.status_code == 200:
+            tree = ET.fromstring(res.content)
+            group_folders = []
+            for x in tree.findall('data/element'):
+                child_dict ={}
+                for child in x:
+                    if child.tag and child.text:
+                        child_dict[child.tag] = child.text
+                group_folders.append(child_dict)
+            return group_folders
+
     def mkdir(self, path):
         """Creates a remote directory
 
