@@ -310,6 +310,7 @@ class Client(object):
     OCS_SERVICE_SHARE = 'apps/files_sharing/api/v1'
     OCS_SERVICE_PRIVATEDATA = 'privatedata'
     OCS_SERVICE_CLOUD = 'cloud'
+    OCS_SERVICE_APPS = '/apps'
 
     # constants from lib/public/constants.php
     OCS_PERMISSION_READ = 1
