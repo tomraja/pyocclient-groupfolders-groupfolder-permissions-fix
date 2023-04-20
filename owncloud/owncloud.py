@@ -725,9 +725,7 @@ class Client(object):
             return res
         
     def set_group_folder_group_permission(self,folder_id,group_name, permission):
-        print(f'\nfolder_id: {folder_id}')
-        print(f'group_name: {group_name}')
-        print(f'permission: {permission}\n')
+        
         self.OCS_BASEPATH = ''
         res = self._make_ocs_request(
             'POST',
