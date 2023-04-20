@@ -723,6 +723,23 @@ class Client(object):
 
         if res.status_code == 200:
             return res
+        
+    def set_group_folder_group_permission(self,folder_id,group_name, permission):
+        print(f'\nfolder_id: {folder_id}')
+        print(f'group_name: {group_name}')
+        print(f'permission: {permission}\n')
+        self.OCS_BASEPATH = ''
+        res = self._make_ocs_request(
+            'POST',
+            self.OCS_SERVICE_APPS,
+            f'groupfolders/folders/{folder_id}/groups/{group_name}',
+            data={"permissions": permission}
+        )
+
+        self.OCS_BASEPATH = 'ocs/v1.php/'
+
+        if res.status_code == 200:
+            return res
 
     def get_group_folders(self):
 
